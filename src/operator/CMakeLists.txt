@@ -13,26 +13,33 @@
 # =============================================================================
 
 set(EXTENSION_SOURCES
-        ${EXTENSION_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_column_data_scan.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_dummy_scan.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_limit.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_delim_join.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_empty_result.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_filter.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_hash_join.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_grouped_aggregate.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_order.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_projection.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_ungrouped_aggregate.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_result_collector.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_table_scan.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_nested_loop_join.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_combine.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_materialize.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_strings_matching.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_substring.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_cte.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_top_n.cpp
-        PARENT_SCOPE
+  ${EXTENSION_SOURCES}
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_column_data_scan.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_dummy_scan.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_limit.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_delim_join.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_empty_result.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_filter.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_hash_join.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_grouped_aggregate.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_order.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_projection.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_ungrouped_aggregate.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_result_collector.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_table_scan.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_nested_loop_join.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_combine.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_materialize.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_strings_matching.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_substring.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_cte.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/gpu_physical_top_n.cpp
+)
+
+add_subdirectory(scan)
+
+# Propagate EXTENSION_SOURCES up to the parent scope (top-level CMake)
+set(EXTENSION_SOURCES
+  ${EXTENSION_SOURCES}
+  PARENT_SCOPE
 )
