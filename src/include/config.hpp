@@ -46,6 +46,12 @@ struct Config {
 
   // Whether to use special JIT implementation for particular regex evaluation
   static bool ENABLE_REGEX_JIT_IMPL;
+
+  // For duckdb scan task:
+  //  - the default batch size
+  //  - the default varchar size for estimating rows per batch
+  static uint64_t DEFAULT_SCAN_TASK_BATCH_SIZE;
+  static uint64_t DEFAULT_SCAN_TASK_VARCHAR_SIZE;
 };
 
 }
