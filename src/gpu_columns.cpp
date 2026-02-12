@@ -472,7 +472,12 @@ void GPUColumn::setFromCudfScalar(cudf::scalar& cudf_scalar, GPUBufferManager* g
     callCudaMemcpyHostToDevice<uint64_t>(data_wrapper.offset, offsets, 2, 0);
     data_wrapper.is_string_data = true;
     data_wrapper.size           = 1;
-    data_wrapper.validity_mask  = createNullMask(1);
+    // Check if scalar is valid (cudf::reduce returns invalid scalar for all-NULL input)
+  data_wrapper.validity_mask = gpuBufferManager->customCudaMalloc<cudf::bitmask_type>(1, 0, 0);
+  cudf::bitmask_type* host_mask = gpuBufferManager->customCudaHostAlloc<cudf::bitmask_type>(1);
+  host_mask[0] = cudf_scalar.is_valid() ? 1 : 0;
+  callCudaMemcpyHostToDevice<uint8_t>(reinterpret_cast<uint8_t*>(data_wrapper.validity_mask),
+    reinterpret_cast<uint8_t*>(host_mask), sizeof(cudf::bitmask_type), 0);
     data_wrapper.mask_bytes     = getMaskBytesSize(1);
     column_length               = 1;
     row_ids                     = nullptr;
@@ -488,7 +493,12 @@ void GPUColumn::setFromCudfScalar(cudf::scalar& cudf_scalar, GPUBufferManager* g
     data_wrapper.data, reinterpret_cast<uint8_t*>(scalar_ptr), scalar_size, 0);
   data_wrapper.num_bytes      = scalar_size;
   data_wrapper.size           = 1;
-  data_wrapper.validity_mask  = createNullMask(1);
+  // Check if scalar is valid (cudf::reduce returns invalid scalar for all-NULL input)
+  data_wrapper.validity_mask = gpuBufferManager->customCudaMalloc<cudf::bitmask_type>(1, 0, 0);
+  cudf::bitmask_type* host_mask = gpuBufferManager->customCudaHostAlloc<cudf::bitmask_type>(1);
+  host_mask[0] = cudf_scalar.is_valid() ? 1 : 0;
+  callCudaMemcpyHostToDevice<uint8_t>(reinterpret_cast<uint8_t*>(data_wrapper.validity_mask),
+    reinterpret_cast<uint8_t*>(host_mask), sizeof(cudf::bitmask_type), 0);
   data_wrapper.mask_bytes     = getMaskBytesSize(1);
   column_length               = 1;
   data_wrapper.offset         = nullptr;
